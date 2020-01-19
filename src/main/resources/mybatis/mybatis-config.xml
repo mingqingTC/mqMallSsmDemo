@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 使用自增主键 -->
+        <setting name="useGeneratedKeys" value="true"/>
+        <!-- 列别名替换列名 -->
+        <setting name="useColumnLabel" value="true"/>
+        <!-- 命名转换 (create_time)->(createTime) -->
+        <setting name="mapUnderscoreToCamelCase" value="true"/>
+    </settings>
+    <!-- 其他配置交给spring -->
+</configuration>

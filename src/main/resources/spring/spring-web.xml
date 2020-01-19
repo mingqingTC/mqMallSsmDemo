@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 配置注解驱动 -->
+    <mvc:annotation-driven/>
+
+    <!-- 配置默认handler -->
+    <mvc:default-servlet-handler/>
+
+    <!-- 配置视图解析器 -->
+    <!-- jsp -->
+    <bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="order" value="1"/><!-- 优先级,值越小优先级越高 -->
+    </bean>
+    <!-- freemarker -->
+    <!-- config -->
+    <bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/freemarker/"/>
+        <property name="freemarkerVariables">
+            <map>
+                <entry key="xml_escape" value-ref="fmXmlEscape"/>
+            </map>
+        </property>
+    </bean>
+    <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
+    <!-- view resolver -->
+    <bean id="freeMarkerViewResolver" class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView"/>
+        <property name="suffix" value=".ftl"/>
+        <property name="contentType" value="text/html;charset=UTF-8"/>
+        <property name="exposeRequestAttributes" value="true"/>
+        <property name="exposeSessionAttributes" value="true"/>
+        <property name="exposeSpringMacroHelpers" value="true"/>
+        <property name="requestContextAttribute" value="request"/>
+        <property name="cache" value="true"/>
+        <property name="order" value="0"/><!-- 优先级,值越小优先级越高 -->
+    </bean>
+
+    <!-- 文件上传下载 -->
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="DefaultEncoding" value="UTF-8"/>
+        <property name="MaxUploadSize" value="1048576"/>
+        <property name="MaxInMemorySize" value="4096"/>
+    </bean>
+
+    <!-- 扫描controller -->
+    <context:component-scan base-package="org.mq.mqMall.controller"/>
+</beans>
